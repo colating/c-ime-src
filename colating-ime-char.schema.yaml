@@ -1,0 +1,331 @@
+# Rime schema
+# encoding: utf-8
+
+# 鸣谢:
+# rime /home: rime "0.14.3" https://github.com/rime/home
+# sgalal /rime-kunyomi,swiftkana "1.4.2": https://github.com/sgalal/rime-kunyomi
+# 感谢开源世界中的人们。
+#
+# Update log:
+# 0.1.6: starting。
+#
+#
+# 使用建议:
+# 1、前期推荐的安全用法：下载已经配置好的Oracle VM VirtualBox虚拟机.vdi文件，在虚拟机中运行。
+# 2、用户自行确认安全并承担风险的情况下，安装Rime, colating-cofang字库，colating-cofang Rime输入法配置yaml文件，
+#    字处理软件，至此就可以学习和使用colating-cofang 数学人类通用语言了。
+# 3、colating-cofang 数学人类通用语言创造的期望目标：
+#    让通用语言文字像走路一样简单，让每个思想都有唯一,高效,易创造,易交流的语言文字标签。
+#
+# Note: default.custom.yaml add patch as follow.Lubuntu默认没有安装UI管理工具，所以需要这个文件。
+#patch:
+#   menu:
+#       page_size: 3 #"\"有顿号/半角/全角。
+#
+
+schema:
+  schema_id: colating-ime-char
+  name: colating char input
+  version: "0.1.12.1"
+  author:
+    - colating <colating@yandex.com>
+  description: |-
+    Colating IME输入法说明：
+    Description Version: See "version" in the file of“colating-ime-char.schema.yaml”;
+       IME Version: 0.1.12.1; 
+       Font Version: ColatingCofangFreeSans-0.2.3.7.
+    
+    ## 输入准备，首先，需要切换到Colating IME场景
+    进入Rime中文状态，此时，如果当前不在“colating-ime-char”输入场景，则需要进行切换。
+    切换方法：按电脑键盘的“F4”键，然后，选择“colating-ime-char”。
+    
+    ## User Manual /使用方法:(colating-cofang Char有效输入按键：标点符号和键盘字母，均为西文)
+    1、前26个小写 普通构词字母:直接键盘字母输入；
+       后26个小写 普通构词字母:句号点"."+键盘字母输入。
+       
+    2、前26个大写 普通构词字母:逗号","+键盘字母输入；
+       后26个大写 普通构词字母:分点";"或"`"+键盘字母输入。
+       
+    3、小写 功能构词字母:单引号"'"+功能字母；
+       大写 功能构词字母:横杆号"-"。
+        二组 功能构词字母为：m/l/k/p/o, n/j/h/i/u。
+        一组 归档功能字母为：b/g/f/y/（t保留）。
+        一组 临时功能字母为：e/r/t。
+        
+    4、标点符号: 
+        标准做法：为了统一字体风格，将ASCII区映射到Colat256个bit中。
+        临时过渡，待考虑中：将Rime切换到西文场景(Shift)输入，或者切换到其他输入法(Ctrl +Shift)来输入。        
+        在Rime中，标点符号的输入没有明显规律或不能随意定制？
+        使用词典或修改punctuator的方法，都不能顾及整个符号体系。
+        现阶段暂不考虑标点的输入问题。
+        
+        E0C4:  下标点输入: -d
+        
+    5、注意事项：
+        Rime默认“F4”切换到[方案选单]。
+        Colating默认输入状态是"colating-cofang对应Rime默认的“中文”)"和"半角"场景。
+        切换到"半角"的方法：
+        a、切换到其他输入法"Shift+Ctrl"，再切换回来；
+        b、在[方案选单]中选择。
+        c、热键 caption: 〔方案選單〕
+            hotkeys:
+            - Control+grave
+            - Control+Shift+grave
+            - F4
+
+        
+
+switches:
+  - name: ascii_mode
+    reset: １
+    states: [ 中文, 西文 ]
+  - name: full_shape
+    reset: 0
+#    states: [ 半角, 全角 ]
+#  - name: ascii_punct
+#    states: [ ．，, 。， ]
+#    states: [ 。，, ．， ]
+#  - name: simplification
+#    states: [ ひら, カタ ]
+
+engine:
+  processors:
+    #  colating-cofang: 关闭ascii_composer
+#    - ascii_composer # - ascii_composer       # ※ 處理西文模式及中西文切換
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - table_translator
+  filters:
+    - simplifier
+
+speller:
+  alphabet: abcdefghijklmnopqrstuvwxyz-.,;'`"'
+  delimiter: " _"
+  auto_select: true
+  algebra:
+    # （26+26+9）*2
+    ## 前26个小写字母输入法
+    - xform/ß1/;'/
+    - xform/Ab/b/
+    - xform/Aa/a/
+    - xform/Ad/d/
+    - xform/Af/f/
+    - xform/Ae/e/
+    - xform/Ag/g/
+    - xform/Ah/h/
+    - xform/Ai/i/
+    - xform/Aj/j/
+    - xform/Ak/k/ # A1-10-1
+    - xform/Ao/o/
+    - xform/Al/l/
+    - xform/Am/m/
+    - xform/Au/u/
+    - xform/At/t/
+    - xform/Ay/y/
+    - xform/Ap/p/
+    - xform/Ar/r/
+    - xform/As/s/
+    - xform/Aq/q/  # A1-20-1
+    - xform/Az/z/
+    - xform/Ax/x/
+    - xform/Av/v/
+    - xform/Ac/c/
+    - xform/Aw/w/
+    - xform/An/n/
+    ## 后26个小写字母 输入法1
+    - xform/Bb/.b/
+    - xform/Ba/.a/
+    - xform/Bd/.d/
+    - xform/Bf/.f/
+    - xform/Be/.e/
+    - xform/Bg/.g/
+    - xform/Bh/.h/
+    - xform/Bi/.i/
+    - xform/Bj/.j/
+    - xform/Bk/.k/ # A2-1-10
+    - xform/Bo/.o/
+    - xform/Bl/.l/
+    - xform/Bm/.m/
+    - xform/Bu/.u/
+    - xform/Bt/.t/
+    - xform/By/.y/
+    - xform/Bp/.p/
+    - xform/Br/.r/
+    - xform/Bs/.s/
+    - xform/Bq/.q/  # A2-1-20
+    - xform/Bz/.z/
+    - xform/Bx/.x/
+    - xform/Bv/.v/
+    - xform/Bc/.c/
+    - xform/Bw/.w/
+    - xform/Bn/.n/
+    # 后26个小写字母 输入法2
+    - xform/Cb/`b/
+    - xform/Ca/`a/
+    - xform/Cd/`d/
+    - xform/Cf/`f/
+    - xform/Ce/`e/
+    - xform/Cg/`g/
+    - xform/Ch/`h/
+    - xform/Ci/`i/
+    - xform/Cj/`j/
+    - xform/Ck/`k/  # A2-2-10
+    - xform/Co/`o/
+    - xform/Cl/`l/
+    - xform/Cm/`m/
+    - xform/Cu/`u/
+    - xform/Ct/`t/
+    - xform/Cy/`y/
+    - xform/Cp/`p/
+    - xform/Cr/`r/
+    - xform/Cs/`s/
+    - xform/Cq/`q/  # A2-2-20
+    - xform/Cz/`z/
+    - xform/Cx/`x/
+    - xform/Cv/`v/
+    - xform/Cc/`c/
+    - xform/Cw/`w/
+    - xform/Cn/`n/
+    # 前26个大写字母
+    - xform/Db/,b/
+    - xform/Da/,a/
+    - xform/Dd/,d/
+    - xform/Df/,f/
+    - xform/De/,e/
+    - xform/Dg/,g/
+    - xform/Dh/,h/
+    - xform/Di/,i/
+    - xform/Dj/,j/
+    - xform/Dk/,k/ # B1-10
+    - xform/Do/,o/
+    - xform/Dl/,l/
+    - xform/Dm/,m/
+    - xform/Du/,u/
+    - xform/Dt/,t/
+    - xform/Dy/,y/
+    - xform/Dp/,p/
+    - xform/Dr/,r/
+    - xform/Ds/,s/
+    - xform/Dq/,q/ # B1-20
+    - xform/Dz/,z/
+    - xform/Dx/,x/
+    - xform/Dv/,v/
+    - xform/Dc/,c/
+    - xform/Dw/,w/
+    - xform/Dn/,n/
+    ## 后26个大写字母
+    - xform/Eb/;b/
+    - xform/Ea/;a/
+    - xform/Ed/;d/
+    - xform/Ef/;f/
+    - xform/Ee/;e/
+    - xform/Eg/;g/
+    - xform/Eh/;h/
+    - xform/Ei/;i/
+    - xform/Ej/;j/
+    - xform/Ek/;k/ # B2-10
+    - xform/Eo/;o/
+    - xform/El/;l/
+    - xform/Em/;m/
+    - xform/Eu/;u/
+    - xform/Et/;t/
+    - xform/Ey/;y/
+    - xform/Ep/;p/
+    - xform/Er/;r/
+    - xform/Es/;s/
+    - xform/Eq/;q/ # B2-20
+    - xform/Ez/;z/
+    - xform/Ex/;x/
+    - xform/Ev/;v/
+    - xform/Ec/;c/
+    - xform/Ew/;w/
+    - xform/En/;n/ # B2-26
+    #### 以下为功能字母区
+## 构词功能字母  
+    - xform/Fm/'m/ # FA1-5 小写
+    - xform/Fl/'l/
+    - xform/Fk/'k/
+    - xform/Fp/'p/
+    - xform/Fo/'o/
+    - xform/Fn/'n/ # FB1-5 小写
+    - xform/Fj/'j/
+    - xform/Fh/'h/
+    - xform/Fi/'i/
+    - xform/Fu/'u/
+    # --------------
+    - xform/Gm/-m/ # FA1-5 大写
+    - xform/Gl/-l/
+    - xform/Gk/-k/
+    - xform/Gp/-p/
+    - xform/Go/-o/
+    - xform/Gn/-n/ # FB1-5 大写
+    - xform/Gj/-j/
+    - xform/Gh/-h/
+    - xform/Gi/-i/
+    - xform/Gu/-u/
+    # --------------   
+## 归档功能字母     
+    - xform/Fb/'b/ # FC1-5 小写 
+    - xform/Fg/'g/
+    - xform/Ff/'f/
+    - xform/Fy/'y/
+#    - xform/Ft/'t/ # 't保留：FC5 小写
+    - xform/Gb/-b/ # FC1-5 大写
+    - xform/Gg/-g/
+    - xform/Gf/-f/
+    - xform/Gy/-y/
+#    - xform/Gt/-t/  # 't保留：FC5 大写
+    # -------------- 
+        ## 以下为临时字母区
+    - xform/Hw/'w/ # FD1-3 临时字母小写
+    - xform/He/'e/
+    - xform/Hr/'r/
+    - xform/Iw/-w/ # FD1-3 临时字母大写
+    - xform/Ie/-e/
+    - xform/Ir/-r/
+    # -------------- 
+        ## 以下为Colating标点符号区
+    - xform/Jd/-d/ # E0C4:  # 下标点
+    # --------------
+#    - xform/白/;o/
+#    - xform/仔/;p/
+# =============================
+
+
+translator:
+  dictionary: colating-cofang-rime-dictionary
+  enable_completion: false
+  enable_user_dict: false
+
+punctuator:
+    import_preset: colating-cofang-symbols
+#    import_preset: mysymbols
+  # 语法参考：一例、定製標點符號 https://github.com/rime/home/wiki/CustomizationGuide#%E4%B8%80%E4%BE%8B%E5%AE%9A%E8%A3%BD%E6%AF%8F%E9%A0%81%E5%80%99%E9%81%B8%E6%95%B8，
+  # 参考swiftkana：在按减号键出字时保证候选唯一，加快打字速度。
+  # 在词典文件中亦定义了该符号（ー），
+  # 是为了避免外部调用词典文件时需要重复修改 punctuator。
+  # 通过 uniquifier 可以保证候选的唯一性。
+#  full_shape:
+#    "-": "ー"
+#  half_shape:
+#    "-": "ー"
+
+key_binder:
+  import_preset: colating-cofang-default
+
+#simplifier:
+#  option_name: simplification
+#  opencc_config: hira2kata.json
+#  tags: [ abc ]
