@@ -1,0 +1,10 @@
+# Rime user dictionary export
+#@/db_name	luna_pinyin.userdb
+#@/db_type	userdb
+#@/rime_version	1.5.3
+#@/tick	4
+#@/user_id	903086d2-5d01-4f52-9015-315d7e6703d1
+宾格	bin ge	1
+与格	yu ge	1
+属格	shu ge	1
+宙沏	zhou qi	1

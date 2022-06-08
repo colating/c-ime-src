@@ -1,0 +1,35 @@
+20211110：取消sogou的2021/11最新字库，似乎并不好用？
+采用编辑“用户字典管理”-“导出文本码表”/“导入文本码表”的方式来取代。
+
+
+Rime 输入法的词库导入导出 / sogou字库导入
+https://github.com/studyzy/imewlconverter/wiki/Rime
+小狼毫
+首先将深蓝词库转换中将目标选成“中州韵”，然后转换并保存到硬盘上。接下来是在Windows的托盘图标中找到小狼毫的图标，右击选择“用户词典管理”，然后选择luna_pinyin，单击“导入文本码表”，选中刚才保存的文件，马上就可以将我们的词库导入到小狼毫的词库中了。
+
+imewlconverter_Windows.zip
+https://github.com/studyzy/imewlconverter/releases
+
+错误：实际使用的效果不好，没不要，去除了。
+解决：须要按照上面的做法，从“用户词典管理”中“导入文本码表”。
+
+Rime 导入搜狗词库
+https://www.jianshu.com/p/300bbe1602d4
+https://www.cnblogs.com/frederichchen/p/5074689.html
+
+注：从sogou.com下载的词库，使用“深蓝词库转换.exe”转换，OK。
+微软拼音词库：https://pinyin.sogou.com/dict/detail/index/10928
+** 在“深蓝词库转换.exe”中，源出选项需要选择：必应输入法，才能够转换。
+
+
+注：下面的参考词库，还不知道怎样使用？
+词库参考：https://github.com/studyzy/imewlconverter/tree/master/%E5%8F%82%E8%80%83
+
+
+1、只须要增加以下2个文件既可，与之前的文件无关。
+luna_pinyin.sogou.dict.yaml
+luna_pinyin_simp.custom.yaml
+
+2、测试sogou字库是否已经在运行
+在“朗月拼音-简化字”输入模式下，进行输入。
+输入：kkk, 或colating，如果输出类似“搜狗字库测试TEST-BY-COLATING”的文字，则OK。

@@ -26,14 +26,14 @@
 schema:
   schema_id: colating-ime-char
   name: colating char input
-  version: "0.1.12.1"
+  version: "0.1.12.2"
   author:
     - colating <colating@yandex.com>
   description: |-
     Colating IME输入法说明：
     Description Version: See "version" in the file of“colating-ime-char.schema.yaml”;
-       IME Version: 0.1.12.1; 
-       Font Version: ColatingCofangFreeSans-0.2.3.7.
+       IME Version: 0.1.16.3; 
+       Font Version: ColatingCofangFreeSans-0.2.4.2.
     
     ## 输入准备，首先，需要切换到Colating IME场景
     进入Rime中文状态，此时，如果当前不在“colating-ime-char”输入场景，则需要进行切换。
@@ -41,16 +41,19 @@ schema:
     
     ## User Manual /使用方法:(colating-cofang Char有效输入按键：标点符号和键盘字母，均为西文)
     1、前26个小写 普通构词字母:直接键盘字母输入；
-       后26个小写 普通构词字母:句号点"."+键盘字母输入。
+        例外：下层键盘 .xz /.xc;   .yt /.yu; .  nb /.nm
+       其余：后23个小写 普通构词字母:句号点"."+键盘字母输入。
        
     2、前26个大写 普通构词字母:逗号","+键盘字母输入；
-       后26个大写 普通构词字母:分点";"或"`"+键盘字母输入。
+        例外：下层键盘 ;xz /;xc;   ;yt /;yu;    ;nb /.nm
+       其余：后23个大写 普通构词字母:分点";"或"`"+键盘字母输入。
        
     3、小写 功能构词字母:单引号"'"+功能字母；
        大写 功能构词字母:横杆号"-"。
-        二组 功能构词字母为：m/l/k/p/o, n/j/h/i/u。
-        一组 归档功能字母为：b/g/f/y/（t保留）。
-        一组 临时功能字母为：e/r/t。
+        二组 功能构词字母为：n, m// k, l// o, p// jj, ii// ji, ij； z, x// a, s// q, w// dd, ee// de, ed。
+        举例：Input as  'n, ‘jj
+        一组 归档功能字母为：r, t, f, g。
+        一组 临时功能字母为：a/s/d。
         
     4、标点符号: 
         标准做法：为了统一字体风格，将ASCII区映射到Colat256个bit中。
@@ -67,12 +70,14 @@ schema:
         切换到"半角"的方法：
         a、切换到其他输入法"Shift+Ctrl"，再切换回来；
         b、在[方案选单]中选择。
-        c、热键 caption: 〔方案選單〕
+        c、热键 caption: 〔方案選單〕，Rime输入法内部模块切换
             hotkeys:
             - Control+grave
             - Control+Shift+grave
             - F4
-
+        d、热键: 与其他输入法进行切换
+            hotkeys:
+            - Control +Shift
         
 
 switches:
@@ -115,192 +120,227 @@ speller:
   delimiter: " _"
   auto_select: true
   algebra:
-    # （26+26+9）*2
-    ## 前26个小写字母输入法
-    - xform/ß1/;'/
-    - xform/Ab/b/
-    - xform/Aa/a/
-    - xform/Ad/d/
-    - xform/Af/f/
-    - xform/Ae/e/
-    - xform/Ag/g/
-    - xform/Ah/h/
-    - xform/Ai/i/
-    - xform/Aj/j/
-    - xform/Ak/k/ # A1-10-1
-    - xform/Ao/o/
-    - xform/Al/l/
-    - xform/Am/m/
-    - xform/Au/u/
-    - xform/At/t/
-    - xform/Ay/y/
-    - xform/Ap/p/
-    - xform/Ar/r/
-    - xform/As/s/
-    - xform/Aq/q/  # A1-20-1
-    - xform/Az/z/
-    - xform/Ax/x/
-    - xform/Av/v/
-    - xform/Ac/c/
-    - xform/Aw/w/
-    - xform/An/n/
-    ## 后26个小写字母 输入法1
-    - xform/Bb/.b/
-    - xform/Ba/.a/
-    - xform/Bd/.d/
-    - xform/Bf/.f/
-    - xform/Be/.e/
-    - xform/Bg/.g/
-    - xform/Bh/.h/
-    - xform/Bi/.i/
-    - xform/Bj/.j/
-    - xform/Bk/.k/ # A2-1-10
-    - xform/Bo/.o/
-    - xform/Bl/.l/
-    - xform/Bm/.m/
-    - xform/Bu/.u/
-    - xform/Bt/.t/
-    - xform/By/.y/
-    - xform/Bp/.p/
-    - xform/Br/.r/
-    - xform/Bs/.s/
-    - xform/Bq/.q/  # A2-1-20
-    - xform/Bz/.z/
-    - xform/Bx/.x/
-    - xform/Bv/.v/
-    - xform/Bc/.c/
-    - xform/Bw/.w/
-    - xform/Bn/.n/
-    # 后26个小写字母 输入法2
-    - xform/Cb/`b/
-    - xform/Ca/`a/
-    - xform/Cd/`d/
-    - xform/Cf/`f/
-    - xform/Ce/`e/
-    - xform/Cg/`g/
-    - xform/Ch/`h/
-    - xform/Ci/`i/
-    - xform/Cj/`j/
-    - xform/Ck/`k/  # A2-2-10
-    - xform/Co/`o/
-    - xform/Cl/`l/
-    - xform/Cm/`m/
-    - xform/Cu/`u/
-    - xform/Ct/`t/
-    - xform/Cy/`y/
-    - xform/Cp/`p/
-    - xform/Cr/`r/
-    - xform/Cs/`s/
-    - xform/Cq/`q/  # A2-2-20
-    - xform/Cz/`z/
-    - xform/Cx/`x/
-    - xform/Cv/`v/
-    - xform/Cc/`c/
-    - xform/Cw/`w/
-    - xform/Cn/`n/
-    # 前26个大写字母
-    - xform/Db/,b/
-    - xform/Da/,a/
-    - xform/Dd/,d/
-    - xform/Df/,f/
-    - xform/De/,e/
-    - xform/Dg/,g/
-    - xform/Dh/,h/
-    - xform/Di/,i/
-    - xform/Dj/,j/
-    - xform/Dk/,k/ # B1-10
-    - xform/Do/,o/
-    - xform/Dl/,l/
-    - xform/Dm/,m/
-    - xform/Du/,u/
-    - xform/Dt/,t/
-    - xform/Dy/,y/
-    - xform/Dp/,p/
-    - xform/Dr/,r/
-    - xform/Ds/,s/
-    - xform/Dq/,q/ # B1-20
-    - xform/Dz/,z/
-    - xform/Dx/,x/
-    - xform/Dv/,v/
-    - xform/Dc/,c/
-    - xform/Dw/,w/
-    - xform/Dn/,n/
-    ## 后26个大写字母
-    - xform/Eb/;b/
-    - xform/Ea/;a/
-    - xform/Ed/;d/
-    - xform/Ef/;f/
-    - xform/Ee/;e/
-    - xform/Eg/;g/
-    - xform/Eh/;h/
-    - xform/Ei/;i/
-    - xform/Ej/;j/
-    - xform/Ek/;k/ # B2-10
-    - xform/Eo/;o/
-    - xform/El/;l/
-    - xform/Em/;m/
-    - xform/Eu/;u/
-    - xform/Et/;t/
-    - xform/Ey/;y/
-    - xform/Ep/;p/
-    - xform/Er/;r/
-    - xform/Es/;s/
-    - xform/Eq/;q/ # B2-20
-    - xform/Ez/;z/
-    - xform/Ex/;x/
-    - xform/Ev/;v/
-    - xform/Ec/;c/
-    - xform/Ew/;w/
-    - xform/En/;n/ # B2-26
     #### 以下为功能字母区
 ## 构词功能字母  
-    - xform/Fm/'m/ # FA1-5 小写
-    - xform/Fl/'l/
-    - xform/Fk/'k/
-    - xform/Fp/'p/
-    - xform/Fo/'o/
-    - xform/Fn/'n/ # FB1-5 小写
-    - xform/Fj/'j/
-    - xform/Fh/'h/
-    - xform/Fi/'i/
-    - xform/Fu/'u/
+## **** 功能字母：字库编码按照单词的结构形状排列顺序，便于排序。 输入法词典按照功能字母的分类顺序。
     # --------------
-    - xform/Gm/-m/ # FA1-5 大写
-    - xform/Gl/-l/
-    - xform/Gk/-k/
-    - xform/Gp/-p/
-    - xform/Go/-o/
-    - xform/Gn/-n/ # FB1-5 大写
-    - xform/Gj/-j/
-    - xform/Gh/-h/
-    - xform/Gi/-i/
-    - xform/Gu/-u/
+    # FA1-10 大写：标准功能字母
+    - xform/Fii/-ii/ # @ 结束功能字母：放在功能字母的最前面，这样排序最优先
+    - xform/Fp/-p/ # 连接功能字母
+    - xform/Fk/-k/ # 音前缀
+    - xform/Fl/-l/ # 音后缀
+    - xform/Fn/-n/ # 义前缀 
+    - xform/Fji/-ji/ # @ 拉丁义前缀
+    - xform/Fm/-m/ # 义后缀
+    - xform/Fij/-ij/ # @ 拉丁义后缀  
+    - xform/Fo/-o/ # 缩写  
+    - xform/Fjj/-jj/ # @ 开始功能字母：放在普通构词字母的最后面，这样排序最“不”优先
+    #
+    # FB1-10 大写：用户功能字母
+    - xform/Fee/-ee/ # @ 结束功能字母：放在功能字母的最前面，这样排序最优先 
+    - xform/Fq/-q/ # 连接功能字母
+    - xform/Fa/-a/ # 音前缀
+    - xform/Fs/-s/ # 音后缀
+    - xform/Fz/-z/ # 义前缀 
+    - xform/Fde/-de/ # @ 拉丁义前缀
+    - xform/Fx/-x/ # 义后缀
+    - xform/Fed/-ed/ # @ 拉丁义后缀
+    - xform/Fw/-w/ # 缩写  
+    - xform/Fdd/-dd/ # @ 开始功能字母：放在普通构词字母的最后面，这样排序最“不”优先
+    # --------------
+    # FA1-10 小写：标准功能字母
+    - xform/Wii/'ii/ # @ 结束功能字母：放在功能字母的最前面，这样排序最优先 
+    - xform/Wp/'p/ # 连接功能字母
+    - xform/Wk/'k/ # 音前缀
+    - xform/Wl/'l/ # 音后缀
+    - xform/Wn/'n/ # 义前缀
+    - xform/Wji/'ji/ # @ 拉丁义前缀
+    - xform/Wm/'m/ # 义后缀
+    - xform/Wij/'ij/ # @ 拉丁义后缀 
+    - xform/Wo/'o/ # 缩写     
+    - xform/Wjj/'jj/ # @ 开始功能字母：放在普通构词字母的最后面，这样排序最“不”优先
+    # FB1-10 小写：用户功能字母
+    - xform/Wee/'ee/ # @ 结束功能字母：放在功能字母的最前面，这样排序最优先 
+    - xform/Wq/'q/ # 连接功能字母
+    - xform/Wa/'a/ # 音前缀
+    - xform/Ws/'s/ # 音后缀
+    - xform/Wz/'z/ # 义前缀 
+    - xform/Wde/'de/ # @ 拉丁义前缀
+    - xform/Wx/'x/ # 义后缀
+    - xform/Wed/'ed/ # @ 拉丁义后缀 
+    - xform/Ww/'w/ # 缩写
+    - xform/Wdd/'dd/ # @ 开始功能字母：放在普通构词字母的最后面，这样排序最“不”优先
     # --------------   
 ## 归档功能字母     
-    - xform/Fb/'b/ # FC1-5 小写 
-    - xform/Fg/'g/
-    - xform/Ff/'f/
-    - xform/Fy/'y/
-#    - xform/Ft/'t/ # 't保留：FC5 小写
-    - xform/Gb/-b/ # FC1-5 大写
-    - xform/Gg/-g/
-    - xform/Gf/-f/
-    - xform/Gy/-y/
-#    - xform/Gt/-t/  # 't保留：FC5 大写
+    - xform/Fr/-r/ # FC1-5 大写
+    - xform/Ft/-t/
+    - xform/Ff/-f/
+    - xform/Fg/-g/
+## 归档功能字母     小写
+    - xform/Wr/'r/ # FC1-5 小写
+    - xform/Wt/'t/
+    - xform/Wf/'f/
+    - xform/Wg/'g/
     # -------------- 
         ## 以下为临时字母区
-    - xform/Hw/'w/ # FD1-3 临时字母小写
-    - xform/He/'e/
-    - xform/Hr/'r/
-    - xform/Iw/-w/ # FD1-3 临时字母大写
-    - xform/Ie/-e/
-    - xform/Ir/-r/
+    - xform/Hu/-u/ # FD1-3 临时字母大写
+    - xform/Hh/-h/
+    - xform/Hb/-b/
+    #
+    - xform/Iu/'u/ # FD1-3 临时字母小写
+    - xform/Ih/'h/
+    - xform/Ib/'b/
     # -------------- 
         ## 以下为Colating标点符号区
-    - xform/Jd/-d/ # E0C4:  # 下标点
+    - xform/Jc/-c/ # E03A:  # 下标点
     # --------------
 #    - xform/白/;o/
 #    - xform/仔/;p/
+    # （26+26+9）*2
+    # 前26个大写字母
+    - xform/Ab/,b/
+    - xform/Aa/,a/
+    - xform/Aw/,w/
+    - xform/Ai/,i/ 
+    - xform/Ag/,g/
+    - xform/Ah/,h/
+    - xform/Ak/,k/
+    - xform/Am/,m/
+    - xform/Al/,l/
+    - xform/As/,s/ # A1-10-1
+    - xform/Ar/,r/
+    - xform/Au/,u/    
+    - xform/Ad/,d/
+    - xform/Aj/,j/
+    - xform/Av/,v/
+    - xform/At/,t/   
+    - xform/Af/,f/
+    - xform/Ap/,p/
+    - xform/Az/,z/
+    - xform/Ao/,o/ # A1-20-1
+    - xform/Aq/,q/ 
+    - xform/Ac/,c/
+    - xform/Ae/,e/
+    - xform/Ax/,x/
+    - xform/Ay/,y/
+    - xform/An/,n/
+    ## 后26个大写字母
+    - xform/Bb/;b/
+    - xform/Ba/;a/
+    - xform/Bw/;w/
+    - xform/Bi/;i/ 
+    - xform/Bg/;g/
+    - xform/Bh/;h/
+    - xform/Bk/;k/
+    - xform/Bm/;m/
+    - xform/Bl/;l/
+    - xform/Bs/;s/ # A1-10-1
+    - xform/Br/;r/
+    - xform/Bu/;u/    
+    - xform/Bd/;d/
+    - xform/Bj/;j/
+    - xform/Bv/;v/
+    - xform/Bt/;t/   
+    - xform/Bf/;f/
+    - xform/Bp/;p/
+    - xform/Bz/;z/
+    - xform/Bo/;o/ # A1-20-1
+    - xform/Bq/;q/ 
+    - xform/Bc/;c/
+    - xform/Be/;e/
+    - xform/Bxz/;xz/ # 短音，共用按键
+    - xform/Bxc/;xc/ # 长音，共用按键
+    - xform/Byt/;yt/ # 共用按键
+    - xform/Byu/;yu/ # 共用按键
+    - xform/Bnb/;nb/ # 共用按键
+    - xform/Bnm/;nm/ # 共用按键  
+    ## 前26个小写字母输入法
+    - xform/Cb/b/
+    - xform/Ca/a/
+    - xform/Cw/w/
+    - xform/Ci/i/ 
+    - xform/Cg/g/
+    - xform/Ch/h/
+    - xform/Ck/k/
+    - xform/Cm/m/
+    - xform/Cl/l/
+    - xform/Cs/s/ # C1-10-1
+    - xform/Cr/r/
+    - xform/Cu/u/    
+    - xform/Cd/d/
+    - xform/Cj/j/
+    - xform/Cv/v/
+    - xform/Ct/t/   
+    - xform/Cf/f/
+    - xform/Cp/p/
+    - xform/Cz/z/
+    - xform/Co/o/ # C1-20-1
+    - xform/Cq/q/ 
+    - xform/Cc/c/
+    - xform/Ce/e/
+    - xform/Cx/x/
+    - xform/Cy/y/
+    - xform/Cn/n/
+    ## 后26个小写字母 输入法 1 **
+    - xform/Db/.b/
+    - xform/Da/.a/
+    - xform/Dw/.w/
+    - xform/Di/.i/ 
+    - xform/Dg/.g/
+    - xform/Dh/.h/
+    - xform/Dk/.k/
+    - xform/Dm/.m/
+    - xform/Dl/.l/
+    - xform/Ds/.s/ # A1-10-1
+    - xform/Dr/.r/
+    - xform/Du/.u/
+    - xform/Dd/.d/
+    - xform/Dj/.j/
+    - xform/Dv/.v/
+    - xform/Dt/.t/   
+    - xform/Df/.f/
+    - xform/Dp/.p/
+    - xform/Dz/.z/
+    - xform/Do/.o/ # A1-20-1
+    - xform/Dq/.q/ 
+    - xform/Dc/.c/
+    - xform/De/.e/
+    - xform/Dxz/.xz/ # 短音，共用按键
+    - xform/Dxc/.xc/ # 长音，共用按键
+    - xform/Dyt/.yt/ # 共用按键
+    - xform/Dyu/.yu/ # 共用按键
+    - xform/Dnb/.nb/ # 共用按键
+    - xform/Dnm/.nm/ # 共用按键
+    # 后26个小写字母 输入法 2 **
+    - xform/Eb/`b/
+    - xform/Ea/`a/
+    - xform/Ew/`w/
+    - xform/Ei/`i/ 
+    - xform/Eg/`g/
+    - xform/Eh/`h/
+    - xform/Ek/`k/
+    - xform/Em/`m/
+    - xform/El/`l/
+    - xform/Es/`s/ # A1-10-1
+    - xform/Er/`r/
+    - xform/Eu/`u/
+    - xform/Ed/`d/
+    - xform/Ej/`j/
+    - xform/Ev/`v/
+    - xform/Et/`t/   
+    - xform/Ef/`f/
+    - xform/Ep/`p/
+    - xform/Ez/`z/
+    - xform/Eo/`o/ # A1-20-1
+    - xform/Eq/`q/ 
+    - xform/Ec/`c/
+    - xform/Ee/`e/
+    - xform/Exz/`xz/ # 短音，共用按键
+    - xform/Exc/`xc/ # 长音，共用按键
+    - xform/Eyt/`yt/ # 短音，共用按键
+    - xform/Eyu/`yu/ # 共用按键
+    - xform/Enb/`nb/ # 短音，共用按键
+    - xform/Enm/`nm/ # 共用按键   
 # =============================
 
 
